@@ -14,5 +14,5 @@ data class Question(
         var description: String="",
 
         @OneToMany
-        var answer: List<Answer>? = null
+        var answer: MutableList<Answer>? = null
 )

@@ -10,13 +10,13 @@ data class Answer(
         var description: String= "",
 
         @OneToMany
-        var action: List<Action>,
+        var action: MutableList<Action>? = null,
 
         @ManyToOne
         @JoinColumn(name="question_id")
-        var question: Question,
+        var question: Question? = null,
 
         @ManyToOne
         @JoinColumn(name="next_question_id")
-        var nextQuestion: Question
+        var nextQuestion: Question? = null
 )
