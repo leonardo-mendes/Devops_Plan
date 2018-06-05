@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.devQuestion</groupId>
-	<artifactId>Developer Questions</artifactId>
+	<artifactId>DeveloperQuestions</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
