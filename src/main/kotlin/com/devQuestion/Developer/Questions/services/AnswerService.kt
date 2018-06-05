@@ -20,6 +20,10 @@ class AnswerService{
                 obj.question?.id.toString(),obj.nextQuestion?.id.toString()) }.collect(Collectors.toList())
     }
 
+    fun findById(id: Long): AnswerResponse = answerRepository.findById(id).get().toResponse()
+
+    fun delete(id: Long) = answerRepository.delete(answerRepository.findById(id).get())
+
     fun insert(answer: Answer) = answerRepository.save(answer)
 
 }

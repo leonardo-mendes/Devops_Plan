@@ -17,6 +17,13 @@ class AnswerResource {
     @GetMapping
     fun findAll(): ResponseEntity<List<AnswerResponse>> = ResponseEntity.ok().body(answerService.findAll())
 
+    @GetMapping("/{id}")
+    fun findById(@PathVariable( value = "id") id: Long): ResponseEntity<AnswerResponse> = ResponseEntity.ok()
+            .body(answerService.findById(id))
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable( value = "id") id: Long): ResponseEntity<Any> = ResponseEntity.ok().body(answerService
+            .delete(id))
 
     @PostMapping
     fun insert(@RequestBody answer: Answer) = ResponseEntity.ok().body(answerService.insert(answer))

@@ -19,5 +19,5 @@ fun List<Answer>.toResponse(): List<AnswerResponse> {
     return response
 }
 
-fun Answer.toReponse(): AnswerResponse = AnswerResponse(id.toString(),description,action?.toResponse(),question?.id.toString(),
+fun Answer.toResponse(): AnswerResponse = AnswerResponse(id.toString(),description,action?.toResponse(),question?.id.toString(),
         nextQuestion?.id.toString())
