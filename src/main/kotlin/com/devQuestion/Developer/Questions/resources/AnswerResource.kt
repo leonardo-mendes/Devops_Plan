@@ -1,7 +1,8 @@
 package com.devQuestion.Developer.Questions.resources
 
-import com.devQuestion.Developer.Questions.domains.Question
-import com.devQuestion.Developer.Questions.services.QuestionService
+import com.devQuestion.Developer.Questions.domains.Answer
+import com.devQuestion.Developer.Questions.domains.reponse.AnswerResponse
+import com.devQuestion.Developer.Questions.services.AnswerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.*
 class AnswerResource {
 
     @Autowired
-    lateinit var questionService: QuestionService
+    lateinit var answerService: AnswerService
 
     @GetMapping
-    fun findAll(): ResponseEntity<List<Question>> = ResponseEntity.ok().body(questionService.findAll())
+    fun findAll(): ResponseEntity<List<AnswerResponse>> = ResponseEntity.ok().body(answerService.findAll())
 
 
     @PostMapping
-    fun insert(@RequestBody question: Question) = ResponseEntity.ok().body(questionService.insert(question))
+    fun insert(@RequestBody answer: Answer) = ResponseEntity.ok().body(answerService.insert(answer))
 
 }

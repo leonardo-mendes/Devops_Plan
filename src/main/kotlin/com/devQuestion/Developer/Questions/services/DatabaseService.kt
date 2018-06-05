@@ -38,49 +38,46 @@ class DatabaseService {
         val answer5 = Answer(description = "answer5", question = question3, nextQuestion = question4)
         val answer6 = Answer(description = "answer6", question = question3, nextQuestion = question4)
 
-        val action1 = Action(description = "action1", answer = answer1)
-        val action2 = Action(description = "action2", answer = answer1)
-        val action3 = Action(description = "action3", answer = answer2)
-        val action4 = Action(description = "action4", answer = answer3)
-        val action5 = Action(description = "action5", answer = answer5)
-        val action6 = Action(description = "action6", answer = answer6)
-
-        question1.answer.let {
-            it?.addAll(Arrays.asList(answer1, answer2))
-        }
-
-        question2.answer.let {
-            it?.addAll(Arrays.asList(answer3, answer4))
-        }
-
-        question3.answer.let {
-            it?.addAll(Arrays.asList(answer5, answer6))
-        }
-
-        answer1.action.let {
-            it?.addAll(Arrays.asList(action1, action2))
-        }
-
-        answer2.action.let {
-            it?.add(action3)
-        }
-
-        answer3.action.let {
-            it?.addAll(Arrays.asList(action4))
-        }
-
-        answer5.action.let {
-            it?.addAll(Arrays.asList(action5))
-        }
-
-        answer6.action.let {
-            it?.addAll(Arrays.asList(action6))
-        }
+        val action1 = Action(description = "action1")
+        val action2 = Action(description = "action2")
+        val action3 = Action(description = "action3")
+        val action4 = Action(description = "action4")
+        val action5 = Action(description = "action5")
+        val action6 = Action(description = "action6")
 
         questionRepository.saveAll(Arrays.asList(question1, question2, question3, question4))
+        actionRepository.saveAll(Arrays.asList(action1, action2, action3, action4, action4, action5, action6))
         answerRepository.saveAll(Arrays.asList(answer1, answer2, answer3, answer4, answer5, answer6))
+
+        action1.answer = answer1
+        action2.answer = answer1
+        action3.answer = answer2
+        action4.answer = answer3
+        action5.answer = answer5
+        action6.answer = answer6
+
         actionRepository.saveAll(Arrays.asList(action1, action2, action3, action4, action4, action5, action6))
 
+        answer1.action = Arrays.asList(action1, action2)
+
+        answer2.action = Arrays.asList(action3)
+
+        answer3.action = Arrays.asList(action4)
+
+        answer5.action = Arrays.asList(action5)
+
+        answer6.action = Arrays.asList(action6)
+
+        answerRepository.saveAll(Arrays.asList(answer1, answer2, answer3, answer4, answer5, answer6))
+
+        question1.answer = Arrays.asList(answer1, answer2)
+
+        question2.answer = Arrays.asList(answer3, answer4)
+
+        question3.answer = Arrays.asList(answer5, answer6)
+
+        questionRepository.saveAll(Arrays.asList(question1, question2, question3, question4))
+        actionRepository.saveAll(Arrays.asList(action1, action2, action3, action4, action4, action5, action6))
     }
 
 }

@@ -13,6 +13,6 @@ data class Question(
         var id: Long = 0L,
         var description: String="",
 
-        @OneToMany
-        var answer: MutableList<Answer>? = null
+        @OneToMany(mappedBy="question")
+        var answer: List<Answer>? = null
 )
