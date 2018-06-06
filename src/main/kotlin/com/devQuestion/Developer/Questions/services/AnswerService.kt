@@ -2,7 +2,10 @@ package com.devQuestion.Developer.Questions.services
 
 import com.devQuestion.Developer.Questions.domains.Answer
 import com.devQuestion.Developer.Questions.domains.reponse.AnswerResponse
+import com.devQuestion.Developer.Questions.domains.request.AnswerRequest
 import com.devQuestion.Developer.Questions.repositories.AnswerRepository
+import com.devQuestion.Developer.Questions.services.converter.toResponseDomain
+import com.devQuestion.Developer.Questions.services.converter.toRequestDomain
 import com.devQuestion.Developer.Questions.services.converter.toResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -14,6 +17,9 @@ class AnswerService{
     @Autowired
     lateinit var answerRepository: AnswerRepository
 
+    @Autowired
+    lateinit var questionService: QuestionService
+
     fun findAll(): List<AnswerResponse> {
         val list = answerRepository.findAll().toList()
         return list.stream().map{ obj -> AnswerResponse(obj.id.toString(),obj.description,obj.action?.toResponse(),
@@ -24,6 +30,17 @@ class AnswerService{
 
     fun delete(id: Long) = answerRepository.delete(answerRepository.findById(id).get())
 
-    fun insert(answer: Answer) = answerRepository.save(answer)
+    fun insert(answer: AnswerRequest) {
+        val question =  questionService.findById(answer.questionId).toResponseDomain()
+        val nextQuestion = questionService.findById(answer.nextQuestionId).toResponseDomain()
+        val insert = Answer(description = answer.description
+                , action = answer.action?.toRequestDomain()
+                , question = question
+                ,nextQuestion = nextQuestion
+        )
+        val answer = answerRepository.save(insert)
+        questionService.update(question.id,answer)
+        questionService.update(nextQuestion.id,answer)
+    }
 
 }
