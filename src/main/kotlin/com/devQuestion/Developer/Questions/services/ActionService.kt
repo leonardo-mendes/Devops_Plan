@@ -6,6 +6,7 @@ import com.devQuestion.Developer.Questions.domains.request.ActionRequest
 import com.devQuestion.Developer.Questions.repositories.ActionRepository
 import com.devQuestion.Developer.Questions.repositories.AnswerRepository
 import com.devQuestion.Developer.Questions.services.converter.toResponse
+import javassist.NotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
@@ -20,10 +21,18 @@ class ActionService @Autowired constructor(private val actionRepository: ActionR
                 obj.answer?.id.toString()) }.collect(Collectors.toList())
     }
 
-    fun findById(id: Long): ActionResponse = actionRepository.findById(id).get().toResponse()
+    fun findById(id: Long): ActionResponse {
+        try {
+           return actionRepository.findById(id).get().toResponse()
+        }catch (e:Exception) {
+            throw NotFoundException("Action id Not Found!")
+        }
 
-    fun delete(id: Long) = actionRepository.delete(actionRepository.findById(id).get())
+    }
+
+    fun delete(id: Long) = actionRepository.deleteById(id)
 
     fun insert(action: ActionRequest) = actionRepository.save(Action(description = action.description,
-            answer = answerRepository.findById(action.answerId).get()))
+             answer = answerRepository.findById(action.answerId).get()))
+
 }

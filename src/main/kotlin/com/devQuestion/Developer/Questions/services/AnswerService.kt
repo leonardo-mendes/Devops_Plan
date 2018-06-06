@@ -28,7 +28,7 @@ class AnswerService @Autowired constructor(private val answerRepository: AnswerR
 
     fun findById(id: Long): AnswerResponse = answerRepository.findById(id).get().toResponse()
 
-    fun delete(id: Long) = answerRepository.delete(answerRepository.findById(id).get())
+    fun delete(id: Long) = answerRepository.deleteById(id)
 
     fun insert(answer: AnswerRequest) {
         val actionList = arrayListOf<Action>()

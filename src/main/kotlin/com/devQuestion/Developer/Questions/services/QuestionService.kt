@@ -26,7 +26,7 @@ class QuestionService @Autowired constructor(private val questionRepository: Que
 
     fun findById(id: Long): QuestionResponse = questionRepository.findById(id).get().toResponse()
 
-    fun delete(id: Long) = questionRepository.delete(questionRepository.findById(id).get())
+    fun delete(id: Long) = questionRepository.deleteById(id)
 
     fun insert(question: Question) = questionRepository.save(question)
 
