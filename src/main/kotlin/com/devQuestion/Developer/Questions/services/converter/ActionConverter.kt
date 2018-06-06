@@ -15,16 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired
  * Created by JoaoPedroCardoso on 05/06/18
  */
 
-@Autowired
-lateinit var answerRepository: AnswerRepository
-
-@Autowired
-lateinit var questionRepositorys: QuestionRepository
-
-private var questionService: QuestionService = QuestionService(questionRepositorys)
-
-private var answerService: AnswerService = AnswerService(answerRepository,questionService)
-
 fun Action.toResponse(): ActionResponse = ActionResponse(id.toString(),description,answer?.id.toString())
 
 fun List<Action>.toResponse(): List<ActionResponse> {
@@ -35,43 +25,3 @@ fun List<Action>.toResponse(): List<ActionResponse> {
  return response
 }
 
-
-fun List<ActionResponse>.toResponseDomain(): List<Action> {
-    val response = arrayListOf<Action>()
-    this.forEach {
-        val answer = it.answerId?.isNotEmpty().run{
-            answerService.findById(it.answerId!!.toLong()).toDomain()
-        }
-
-        response.add(
-                Action(0L,it.description,answer)
-        )  }
-    return response
-}
-
-fun ActionResponse.toResponseDomain(): Action {
-    val answer = answerId?.isNotEmpty().let {
-        answerService.findById(answerId!!.toLong()).toDomain()
-    }
-    return Action(description = description,answer = answer)
-}
-
-fun List<ActionRequest>.toRequestDomain(): List<Action> {
-    val response = arrayListOf<Action>()
-    this.forEach {
-        val answer = it.answerId?.run{
-            answerService.findById(it.answerId).toDomain()
-        }
-
-        response.add(
-                Action(0L,it.description,answer)
-        )  }
-    return response
-}
-
-fun ActionRequest.toRequestDomain(): Action {
-    val answer = answerId?.let {
-        answerService.findById(answerId).toDomain()
-    }
-    return Action(description = description,answer = answer)
-}

@@ -8,5 +8,3 @@ import com.devQuestion.Developer.Questions.domains.reponse.QuestionResponse
  */
 
 fun Question.toResponse(): QuestionResponse = QuestionResponse(id.toString(),description,answer?.toResponse())
-
-fun QuestionResponse.toResponseDomain(): Question = Question(description = description, answer = answer?.toDomain())

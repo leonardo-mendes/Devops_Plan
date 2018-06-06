@@ -29,21 +29,3 @@ fun List<Answer>.toResponse(): List<AnswerResponse> {
 
 fun Answer.toResponse(): AnswerResponse = AnswerResponse(id.toString(),description,action?.toResponse(),question?.id.toString(),
         nextQuestion?.id.toString())
-
-fun AnswerResponse.toDomain(): Answer {
-    val question = questionId?.isNotEmpty().let {
-        questionService.findById(questionId!!.toLong()).toResponseDomain()
-    }
-    val nextQuestion = nextQuestionId?.isNotEmpty().let {
-        questionService.findById(nextQuestionId!!.toLong()).toResponseDomain()
-    }
-
-    return Answer(description = description, action = action?.toResponseDomain()
-            , question = question, nextQuestion = nextQuestion)
-}
-
-fun List<AnswerResponse>.toDomain(): List<Answer> {
-    val response = arrayListOf<Answer>()
-    this.forEach {response.add(it.toDomain())  }
-    return response
-}
