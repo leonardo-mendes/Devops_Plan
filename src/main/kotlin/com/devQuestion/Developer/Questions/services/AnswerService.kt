@@ -11,6 +11,7 @@ import com.devQuestion.Developer.Questions.repositories.QuestionRepository
 import com.devQuestion.Developer.Questions.services.converter.toResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.function.Consumer
 import java.util.stream.Collectors
 
 @Service
@@ -34,19 +35,29 @@ class AnswerService @Autowired constructor(private val answerRepository: AnswerR
 
         val question =  questionRepository.findById(answer.questionId).get()
         val nextQuestion = questionRepository.findById(answer.nextQuestionId).get()
-        answer.action?.forEach { actionRequest: ActionRequest ->
-            actionList.add(actionRepository.findById(actionRequest.answerId).get())
-        }
+        answer.action?.stream()?.forEach({ t ->
+            if (answerRepository.findById(t.answerId).isPresent){
+                run {
+                    actionList.add(Action(description = t.description,answer = answerRepository.findById(t.answerId).get()))
+                }
+            }else{
+                run {
+                    actionList.add(Action(description = t.description))
+                }
+            }
+        })
+
+        val retorno = actionRepository.saveAll(actionList).toList()
 
         val insert = Answer(description = answer.description
-                , action = actionList
+                , action = retorno
                 , question = question
                 ,nextQuestion = nextQuestion
         )
 
         val answer = answerRepository.save(insert)
-        questionService.update(question.id,answer)
-        questionService.update(nextQuestion.id,answer)
+        questionService.update(question.id,answer.id,retorno)
+        questionService.updateNextQuestion(nextQuestion.id,answer,retorno)
     }
 
 }

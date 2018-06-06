@@ -10,10 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
  * Created by JoaoPedroCardoso on 05/06/18
  */
 
-@Autowired
-lateinit var questionRepository: QuestionRepository
-
-private var questionService: QuestionService = QuestionService(questionRepository)
 
 fun List<Answer>.toResponse(): List<AnswerResponse> {
     val response = arrayListOf<AnswerResponse>()
