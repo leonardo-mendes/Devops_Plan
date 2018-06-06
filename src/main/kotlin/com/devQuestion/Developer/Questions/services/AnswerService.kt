@@ -12,13 +12,8 @@ import org.springframework.stereotype.Service
 import java.util.stream.Collectors
 
 @Service
-class AnswerService{
-
-    @Autowired
-    lateinit var answerRepository: AnswerRepository
-
-    @Autowired
-    lateinit var questionService: QuestionService
+class AnswerService @Autowired constructor(private val answerRepository: AnswerRepository,
+                                           private val questionService: QuestionService){
 
     fun findAll(): List<AnswerResponse> {
         val list = answerRepository.findAll().toList()

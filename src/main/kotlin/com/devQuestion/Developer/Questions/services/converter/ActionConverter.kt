@@ -5,6 +5,8 @@ import com.devQuestion.Developer.Questions.domains.Answer
 import com.devQuestion.Developer.Questions.domains.reponse.ActionResponse
 import com.devQuestion.Developer.Questions.domains.reponse.AnswerResponse
 import com.devQuestion.Developer.Questions.domains.request.ActionRequest
+import com.devQuestion.Developer.Questions.repositories.AnswerRepository
+import com.devQuestion.Developer.Questions.repositories.QuestionRepository
 import com.devQuestion.Developer.Questions.services.AnswerService
 import com.devQuestion.Developer.Questions.services.QuestionService
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,9 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired
  * Created by JoaoPedroCardoso on 05/06/18
  */
 
-//TODO Fix it
 @Autowired
-lateinit var answerService: AnswerService
+lateinit var answerRepository: AnswerRepository
+
+@Autowired
+lateinit var questionRepositorys: QuestionRepository
+
+private var questionService: QuestionService = QuestionService(questionRepositorys)
+
+private var answerService: AnswerService = AnswerService(answerRepository,questionService)
 
 fun Action.toResponse(): ActionResponse = ActionResponse(id.toString(),description,answer?.id.toString())
 

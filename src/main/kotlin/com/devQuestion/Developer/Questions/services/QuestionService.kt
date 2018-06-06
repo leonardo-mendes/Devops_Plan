@@ -13,10 +13,7 @@ import java.util.*
 import java.util.stream.Collectors
 
 @Service
-class QuestionService{
-
-    @Autowired
-    lateinit var questionRepository: QuestionRepository
+class QuestionService @Autowired constructor(private val questionRepository: QuestionRepository){
 
     fun findAll(): List<QuestionResponse> {
         val list = questionRepository.findAll().toList()
