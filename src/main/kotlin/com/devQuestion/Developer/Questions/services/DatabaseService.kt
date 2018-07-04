@@ -26,32 +26,32 @@ class DatabaseService {
     @Throws(ParseException::class)
     fun instantiateTestDataBase() {
 
-        val question1 = Question(description = "question1")
-        val question2 = Question(description = "question2")
-        val question3 = Question(description = "question3")
+        val question1 = Question(description = "Voce ja tem passaporte?")
+        val question2 = Question(description = "O Pais que voce vai precisa de visto?")
+        val question3 = Question(description = "O seu visto esta atualizado?")
         val question4 = Question(description = "question4")
 
-        val answer1 = Answer(description = "answer1", question = question1, nextQuestion = question2)
-        val answer2 = Answer(description = "answer2", question = question1, nextQuestion = question3)
-        val answer3 = Answer(description = "answer3", question = question2, nextQuestion = question4)
-        val answer4 = Answer(description = "answer4", question = question2, nextQuestion = question4)
-        val answer5 = Answer(description = "answer5", question = question3, nextQuestion = question4)
-        val answer6 = Answer(description = "answer6", question = question3, nextQuestion = question4)
+        val answer1 = Answer(description = "Nao", question = question1, nextQuestion = question2)
+        val answer2 = Answer(description = "Sim", question = question1)
+        val answer3 = Answer(description = "Sim", question = question2, nextQuestion = question4)
+        val answer4 = Answer(description = "Nao", question = question2)
+        val answer5 = Answer(description = "Sim", question = question3)
+        val answer6 = Answer(description = "Nao", question = question3)
 
-        val action1 = Action(description = "action1")
+        val action1 = Action(description = "Dar entrada na papelada, pedir passaporte!")
         val action2 = Action(description = "action2")
         val action3 = Action(description = "action3")
-        val action4 = Action(description = "action4")
-        val action5 = Action(description = "action5")
-        val action6 = Action(description = "action6")
+        val action4 = Action(description = "Buscar a embaixada para pegar documentos")
+        val action5 = Action(description = "Be happy")
+        val action6 = Action(description = "Atualizar o visto")
 
         questionRepository.saveAll(Arrays.asList(question1, question2, question3, question4))
         actionRepository.saveAll(Arrays.asList(action1, action2, action3, action4, action4, action5, action6))
         answerRepository.saveAll(Arrays.asList(answer1, answer2, answer3, answer4, answer5, answer6))
 
         action1.answer = answer1
-        action2.answer = answer1
-        action3.answer = answer2
+        //action2.answer = answer1
+        //action3.answer = answer2
         action4.answer = answer3
         action5.answer = answer5
         action6.answer = answer6
